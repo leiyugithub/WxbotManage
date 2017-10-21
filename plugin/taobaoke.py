@@ -12,41 +12,42 @@ import time
 import random
 
 def run(WXBOT,msg,plugin_name):
-	try:
-		WXBOT.bot_conf[plugin_name]
-	except:
-		WXBOT.bot_conf[plugin_name] ={
-		    'switch':True,
-		    'alimama_siteid':'15574862',
-		    'alimama_adzoneid':'59576937',
-		    'alimama_sign_account':'ca387a0f250083076b1b2168c824881f',
-		    'message_send_with_coupons':u'发现优惠券啦！复制这条信息%s，打开【手机淘宝】可领取本群专属手机优惠劵【%s元】在下单购买！如果无法领取说明代金券已经领取完！',
-		    'message_send_with_fanli':u'复制本内容%s,打开【手机淘宝】下单并确认收货后将订单号私聊我，可以领取商家红包【%s元】！有问题可以私聊咨询我！',
-		    'message_search_fail':u'没有相关优惠，换个试试吧～'
-		}
-		
-	if  WXBOT.bot_conf[plugin_name]['switch'] == True and ((msg['msg_type_id'] == 3  or msg['msg_type_id'] == 4 ) and msg['content']['type'] == 0 ):		   
-		A_MAMA = Lib.alimama.alimama(WXBOT.bot_conf[plugin_name]['alimama_siteid'],WXBOT.bot_conf[plugin_name]['alimama_adzoneid'],WXBOT.bot_conf[plugin_name]['alimama_sign_account'],'remote')
-		print '[INFO] Start anaysis Message!' 
-		#匹配查询命令，并找到对应关键词商品回复
-		search_pattern	 =  re.compile(u"^(买|找|帮我找|有没有|我要买)\s?(.*?)$")
-		Command_result   = search_pattern.findall(msg['content']['data'])
-		if len(Command_result)==1:
-			skey = Command_result[0][1]
-			print u'[INFO] TBK命中查询命令，关键词-->%s'%(skey)
-			result,data = A_MAMA.search_item_info_by_key_use_queqiao(skey)
-			send_search_result_to_uid(WXBOT,A_MAMA,data,msg,skey,'',plugin_name)
-
-		#模糊匹配url提取商品id
-		search_url_pattern =  re.compile(u"[a-zA-z]+://[^\s]*")
-		Command_result = search_url_pattern.findall(msg['content']['data'])
-		if len(Command_result) > 0:
-			iid = search_iid_from_url(Command_result[0])
-			#print u'[INFO] LOG-->Command_result:%s'%(str(Command_result))
-			if iid != '':
-				print u'[INFO] TBK发现商品ID-->%s'%(iid)
-				result,data = A_MAMA.search_item_info_by_iid(iid)
-				send_search_result_to_uid(WXBOT,A_MAMA,data,msg,'',iid,plugin_name)
+	pass
+	# try:
+	# 	WXBOT.bot_conf[plugin_name]
+	# except:
+	# 	WXBOT.bot_conf[plugin_name] ={
+	# 	    'switch':True,
+	# 	    'alimama_siteid':'15574862',
+	# 	    'alimama_adzoneid':'59576937',
+	# 	    'alimama_sign_account':'ca387a0f250083076b1b2168c824881f',
+	# 	    'message_send_with_coupons':u'发现优惠券啦！复制这条信息%s，打开【手机淘宝】可领取本群专属手机优惠劵【%s元】在下单购买！如果无法领取说明代金券已经领取完！',
+	# 	    'message_send_with_fanli':u'复制本内容%s,打开【手机淘宝】下单并确认收货后将订单号私聊我，可以领取商家红包【%s元】！有问题可以私聊咨询我！',
+	# 	    'message_search_fail':u'没有相关优惠，换个试试吧～'
+	# 	}
+	#
+	# if  WXBOT.bot_conf[plugin_name]['switch'] == True and ((msg['msg_type_id'] == 3  or msg['msg_type_id'] == 4 ) and msg['content']['type'] == 0 ):
+	# 	A_MAMA = Lib.alimama.alimama(WXBOT.bot_conf[plugin_name]['alimama_siteid'],WXBOT.bot_conf[plugin_name]['alimama_adzoneid'],WXBOT.bot_conf[plugin_name]['alimama_sign_account'],'remote')
+	# 	print '[INFO] Start anaysis Message!'
+	# 	#匹配查询命令，并找到对应关键词商品回复
+	# 	search_pattern	 =  re.compile(u"^(买|找|帮我找|有没有|我要买)\s?(.*?)$")
+	# 	Command_result   = search_pattern.findall(msg['content']['data'])
+	# 	if len(Command_result)==1:
+	# 		skey = Command_result[0][1]
+	# 		print u'[INFO] TBK命中查询命令，关键词-->%s'%(skey)
+	# 		result,data = A_MAMA.search_item_info_by_key_use_queqiao(skey)
+	# 		send_search_result_to_uid(WXBOT,A_MAMA,data,msg,skey,'',plugin_name)
+    #
+	# 	#模糊匹配url提取商品id
+	# 	search_url_pattern =  re.compile(u"[a-zA-z]+://[^\s]*")
+	# 	Command_result = search_url_pattern.findall(msg['content']['data'])
+	# 	if len(Command_result) > 0:
+	# 		iid = search_iid_from_url(Command_result[0])
+	# 		#print u'[INFO] LOG-->Command_result:%s'%(str(Command_result))
+	# 		if iid != '':
+	# 			print u'[INFO] TBK发现商品ID-->%s'%(iid)
+	# 			result,data = A_MAMA.search_item_info_by_iid(iid)
+	# 			send_search_result_to_uid(WXBOT,A_MAMA,data,msg,'',iid,plugin_name)
 
 def send_search_result_to_uid(WXBOT,A_MAMA,data,msg,skey=None,iid=None,plugin_name=None):
 	#模糊匹配中，如果匹配到查询命令会调用此函数

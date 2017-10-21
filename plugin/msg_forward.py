@@ -8,21 +8,22 @@ import requests
 import thread
 
 def run(WXBOT,msg,plugin_name):
-	try:
-		WXBOT.bot_conf[plugin_name]
-	except:
-		WXBOT.bot_conf[plugin_name] = ['http://www.vivre.cn/msg_recive.php']
-
-	try:
-		for url in WXBOT.bot_conf[plugin_name]:
-			data = {
-					"msg":msg,
-					"bot_id":WXBOT.uuid,
-					"account_uin":WXBOT.my_account['Uin']
-				}
-			thread.start_new_thread(send_msg,(url,data,plugin_name))
-	except Exception,e:
-		print u'[ERRO]%s插件运行错误--->%s'%(plugin_name,e)
+	pass
+	# try:
+	# 	WXBOT.bot_conf[plugin_name]
+	# except:
+	# 	WXBOT.bot_conf[plugin_name] = ['http://www.vivre.cn/msg_recive.php']
+    #
+	# try:
+	# 	for url in WXBOT.bot_conf[plugin_name]:
+	# 		data = {
+	# 				"msg":msg,
+	# 				"bot_id":WXBOT.uuid,
+	# 				"account_uin":WXBOT.my_account['Uin']
+	# 			}
+	# 		thread.start_new_thread(send_msg,(url,data,plugin_name))
+	# except Exception,e:
+	# 	print u'[ERRO]%s插件运行错误--->%s'%(plugin_name,e)
 
 def send_msg(url,data,plugin_name):
 	#print url,data
