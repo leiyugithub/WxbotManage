@@ -18,7 +18,7 @@ def run(WXBOT,msg,plugin_name):
 		    'max_text_length': 80000,  #消息允许的最大长度
 		    'badgay_message' : u'%s由于违反群内消息发送规定，已被踢出此群，请大家注意遵守群内秩序!',  #炸群踢人消息
 		    'admin_account_list' : [u'Running'] , #有踢人权限的账号列表
-			'alowgroups': [u'机器人']
+			'alowgroups': [u'机器人', u'一车购经纪人•全国102群']
 		}
 		return
 	if msg['user']['name'] in WXBOT.bot_conf[plugin_name]['alowgroups']:

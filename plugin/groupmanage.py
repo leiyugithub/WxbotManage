@@ -7,8 +7,11 @@ import web
 import re
 import os
 import time
+import sys
 
 def run(WXBOT,msg,plugin_name):
+	reload(sys)
+	sys.setdefaultencoding('utf-8')
 	try:
 		WXBOT.bot_conf[plugin_name]
 	except:
@@ -20,7 +23,7 @@ def run(WXBOT,msg,plugin_name):
 						  u'准户买车填写http://cn.mikecrm.com/L1PT5wS，半个工作日内工作人员会在群内反馈信息文明交流，禁发广告。',
 			'switch_allow_change_gname':False,
 			'admin_account_list': [u'Running'] , # 有踢人权限的账号列表
-			'alowgroups': [u'机器人']
+			'alowgroups': [u'机器人',u'一车购经纪人•全国102群']
 		}
 		return
 	#相关日志查看data中的weixin数据库！！
