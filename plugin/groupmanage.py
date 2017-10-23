@@ -105,10 +105,13 @@ def run(WXBOT,msg,plugin_name):
 				if  result[0][0] != u'你':
 					try:
 						#判断一下是否允许修改群名，不允许的话将修改群名回去
-						if WXBOT.bot_conf[plugin_name]['switch_allow_change_gname'] == 'False':
-							WXBOT.set_group_name(msg['user']['id'],msg['user']['name'])
+						if WXBOT.bot_conf[plugin_name]['switch_allow_change_gname'] == False:
+							print u'[INFO] 非管理员修改群名称，将自动修改为原始群名称'
+							result = WXBOT.set_group_name(msg['user']['id'],msg['user']['name'])
+							print u'修改群名称结果--->%s'%result
 						pass
 					except Exception,e:
 						pass
+				WXBOT.get_contact()
 			#WXBOT.get_contact()
 			return
