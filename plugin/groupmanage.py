@@ -18,8 +18,8 @@ def run(WXBOT,msg,plugin_name):
 		WXBOT.bot_conf[plugin_name] ={
 			'switch':True,
 			'db_name':'weixin.db',
-			'welcome_msg':u'欢迎《%s》入群\n\n进群请改群名片：经纪人编号-姓名\n例：007-詹姆斯邦德（姓名）\n\n一车购，互联网汽车代购专家！\n找我低价购车，'
-						  u'从此买车无忧！\n推荐朋友购车，人情佣金两不误\n寻车问价@一车购李军翼  其他问题@群主\n'
+			'welcome_msg':u'欢迎【%s】入群\n\n进群请改群名片：经纪人编号-姓名\n例：007-詹姆斯邦德（姓名）\n\n一车购，互联网汽车代购专家！\n找我低价购车，'
+						  u'从此买车无忧！\n推荐朋友购车，人情佣金两不误\n寻车问价@一车购李军翼  其他问题@群主大大\n'
 						  u'准户买车填写http://cn.mikecrm.com/L1PT5wS，半个工作日内工作人员会在群内反馈信息文明交流，禁发广告。',
 			'switch_allow_change_gname':False,
 			'admin_account_list': [u'Running'] , # 有踢人权限的账号列表
@@ -65,7 +65,11 @@ def run(WXBOT,msg,plugin_name):
 								)
 						except Exception,e:
 							pass
-					WXBOT.send_msg_by_uid(WXBOT.bot_conf[plugin_name]['welcome_msg']%(result[0][1]),msg['user']['id'])
+					WXBOT.get_contact()
+					time.sleep(4)
+					username = result[0][1]
+					username = re.sub(r'<span((?!</?span).)+</span>', '', username).replace('"','')
+					WXBOT.send_msg_by_uid(WXBOT.bot_conf[plugin_name]['welcome_msg']%(username),msg['user']['id'])
 					#相同的人退出后在入群，不记录日志！
 			#匹配二维码扫描入群，人数超过100后就无法扫描入群了
 			result = group_invit_2.findall(msg['content']['data'])
