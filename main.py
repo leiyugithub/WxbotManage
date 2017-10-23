@@ -42,28 +42,28 @@ class webui:
         if web.ctx.session.logged_in  != True :
             raise web.seeother('/login.html')
         if action == 'wx_login':
-            data = requests.get('http://127.0.0.1:8080/api/wx_login/').json()
+            data = requests.get('http://127.0.0.1:1111/api/wx_login/').json()
             return render.wx_login(data) 
             
         if action == 'bot_list':
-            data = requests.get('http://127.0.0.1:8080/api/get_wxbot_status/').json()
+            data = requests.get('http://127.0.0.1:1111/api/get_wxbot_status/').json()
             return render.bot_list(data) 
             
         if action == 'get_bot_conf':
             bot_id = web.input()['bot_id']    
-            data = requests.get('http://127.0.0.1:8080/api/get_bot_conf/?bot_id=%s'%(bot_id)).json()
+            data = requests.get('http://127.0.0.1:1111/api/get_bot_conf/?bot_id=%s'%(bot_id)).json()
             bot_conf = json.dumps(data['data']['bot_conf'],ensure_ascii=False,indent=4)
             return render.get_bot_conf(bot_id,bot_conf)
         
         if action == 'get_contact_list':
             bot_id = web.input()['bot_id']    
-            data = requests.get('http://127.0.0.1:8080/api/get_contact_list/?bot_id=%s'%(bot_id)).json()
+            data = requests.get('http://127.0.0.1:1111/api/get_contact_list/?bot_id=%s'%(bot_id)).json()
             return render.get_contact_list(bot_id,data) 
             
         if action == 'get_group_list':
             bot_id = web.input()['bot_id']    
-            data = requests.get('http://127.0.0.1:8080/api/get_group_list/?bot_id=%s'%(bot_id)).json()
-            group_members = requests.get('http://127.0.0.1:8080/api/get_group_members/?bot_id=%s'%(bot_id)).json()['data']['group_members']
+            data = requests.get('http://127.0.0.1:1111/api/get_group_list/?bot_id=%s'%(bot_id)).json()
+            group_members = requests.get('http://127.0.0.1:1111/api/get_group_members/?bot_id=%s'%(bot_id)).json()['data']['group_members']
             group_list = data['data']['group_list']
             new_group_list = []
             for temp in group_list:
@@ -78,7 +78,7 @@ class webui:
         if action == 'get_group_member_list':
             bot_id = web.input()['bot_id']    
             gid    = web.input()['gid']
-            group_members = requests.get('http://127.0.0.1:8080/api/get_group_members/?bot_id=%s'%(bot_id)).json()['data']['group_members']
+            group_members = requests.get('http://127.0.0.1:1111/api/get_group_members/?bot_id=%s'%(bot_id)).json()['data']['group_members']
             return render.get_group_member_list(bot_id,gid,group_members[gid])     
             
     def POST(self,action):
@@ -87,14 +87,14 @@ class webui:
             
         if action == 'delete_wxbot':
             bot_id = web.input()['bot_id']    
-            data = requests.get('http://127.0.0.1:8080/api/delete_wxbot/?bot_id=%s'%(bot_id)).json()
+            data = requests.get('http://127.0.0.1:1111/api/delete_wxbot/?bot_id=%s'%(bot_id)).json()
             return '{"statusCode":"200","message":"操作成功","navTabId":"bot_list"}'
             
         if action == 'update_bot_conf':
             bot_id = web.input()['bot_id']    
             bot_conf = web.input()['bot_conf']
             post_data = {'bot_id':bot_id,'bot_conf':bot_conf}
-            data = requests.post('http://127.0.0.1:8080/api/update_bot_conf/?bot_id=%s'%(bot_id),data=post_data).json()
+            data = requests.post('http://127.0.0.1:1111/api/update_bot_conf/?bot_id=%s'%(bot_id),data=post_data).json()
             return '{"statusCode":"200","message":"操作成功"}'
             
 class api:
