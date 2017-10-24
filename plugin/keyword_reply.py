@@ -18,12 +18,13 @@ def run(WXBOT,msg,plugin_name):
 		return
 	if msg['user']['name'] in WXBOT.bot_conf[plugin_name]['alowgroups']:
 		if WXBOT.bot_conf[plugin_name]['switch'] == True and (msg['msg_type_id'] == 3 and  msg['content']['type'] == 0):
-			print msg
 			content = msg['content']['data']
-			if WXBOT.bot_conf[plugin_name]['keywords'].has_key(content):
-				username = msg['content']['user']['name']
-				username = re.sub(r'<span((?!</?span).)+</span>', '', username)
-				WXBOT.send_msg_by_uid(WXBOT.bot_conf[plugin_name]['keywords'].get(content)%(username), msg['user']['id'])
+			for x in WXBOT.bot_conf[plugin_name]['keywords'].iterkeys():
+				if msg['content']['data'].find(x) >=0:
+					username = msg['content']['user']['name']
+					username = re.sub(r'<span((?!</?span).)+</span>', '', username)
+					WXBOT.send_msg_by_uid(WXBOT.bot_conf[plugin_name]['keywords'].get(x)%(username),msg['user']['id'])
+
 			# else:
 			# 	content = content.encode('utf-8').upper().replace(' ','')
 			# 	jb = jieba_util()
